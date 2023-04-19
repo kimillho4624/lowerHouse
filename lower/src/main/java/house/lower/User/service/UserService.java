@@ -20,8 +20,13 @@ public class UserService {
 
         List<UserVO> userList = userMapper.selectUserList(userVO);
 
-        log.info("@@@@@@@@@@@@@@@@list={}",userList);
-
         return userList;
+    }
+
+    public int saveUserInfo(UserVO userVO) throws Exception {
+
+        int result = userMapper.saveUserInfo(userVO);
+
+        return result;
     }
 }

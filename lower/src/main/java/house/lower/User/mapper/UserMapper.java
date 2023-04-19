@@ -10,4 +10,6 @@ import java.util.List;
 public interface UserMapper {
 
     List<UserVO> selectUserList(UserVO userVO) throws SQLException;
+
+    int saveUserInfo(UserVO userVO) throws SQLException;
 }
