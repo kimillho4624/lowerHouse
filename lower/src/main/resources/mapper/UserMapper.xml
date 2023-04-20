@@ -2,9 +2,9 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="house.lower.User.mapper.UserMapper">
+<mapper namespace="house.lower.user.mapper.UserMapper">
     <!-- 사용자 조회 -->
-    <select id="selectUserList" parameterType="house.lower.User.vo.UserVO" resultType="house.lower.User.vo.UserVO">
+    <select id="selectUserList" parameterType="house.lower.user.vo.UserVO" resultType="house.lower.user.vo.UserVO">
         SELECT
             USER_NO
             ,USER_PASSWORD
@@ -18,6 +18,8 @@
             ,USER_DEL_YN
         FROM
             USER_INFO
+        WHERE
+            USER_DEL_YN = 'N'
     </select>
 
     <!-- 사용자 정보 저장 -->
@@ -45,4 +47,49 @@
                 #{userAge}
             )
     </insert>
+
+    <!-- 회원 조회 -->
+    <select id="selectUserInfo" resultType="house.lower.user.vo.UserVO" parameterType="int">
+        SELECT
+            USER_NO
+            ,USER_PASSWORD
+            ,USER_ID
+            ,CLASS_NO
+            ,(SELECT CLASS_NAME FROM CLASS_INFO WHERE CLASS_NO = A.CLASS_NO) AS CLASS_NAME
+            ,USER_EMAIL
+            ,USER_NAME
+            ,USER_PHONE
+            ,USER_AGE
+            ,TO_CHAR(USER_REG_DT,'YYYY-MM-DD') AS USER_REG_DT
+            ,USER_DEL_YN
+        FROM
+            USER_INFO A
+        WHERE
+            USER_NO = #{userNo}
+    </select>
+
+    <!-- 회원 삭제 -->
+    <update id="removeUserInfo" parameterType="int">
+        UPDATE
+            USER_INFO
+        SET
+            USER_DEL_YN = 'Y'
+        WHERE
+            USER_NO = #{userNo}
+    </update>
+
+    <!-- 회원 수정 -->
+    <update id="updateUserInfo" parameterType="house.lower.user.vo.UserVO">
+        UPDATE
+            USER_INFO
+        SET
+            USER_PASSWORD = #{userPassword},
+            USER_NAME = #{userName},
+            CLASS_NO = #{classNo},
+            USER_PHONE = #{userPhone},
+            USER_AGE = #{userAge},
+            USER_EMAIL = #{userEmail}
+        WHERE
+            USER_NO = #{userNo}
+    </update>
 </mapper>

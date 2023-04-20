@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{includes/header :: head}"></head>
+
+<body class="bg-gradient-primary">
+
+<div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">회원수정</h1>
+                        </div>
+                        <form id="userForm" class="user" th:action="@{/user/edit}" th:object="${userVO}" method="post">
+                                <input type="hidden" th:field="*{userNo}">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" th:field="*{userId}" readonly >
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" th:field="*{userPassword}">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" th:field="*{userName}" >
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" th:field="*{userAge}" >
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" th:field="*{classNo}">
+                                    <option th:value="0">-반 이름--</option>
+                                    <option th:value="1">바다</option>
+                                    <option th:value="2">사랑</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" th:field="*{userPhone}" >
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control form-control-user" th:field="*{userEmail}"  >
+                            </div>
+                            <a href="#" th:onclick="save();" class="btn btn-primary btn-user btn-block">저장</a>
+                        </form>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/js/user/user.js"></script>
+</div>
+<footer th:replace="~{includes/footer :: footer}"></footer>
+</body>
+</html>
