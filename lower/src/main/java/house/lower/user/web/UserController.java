@@ -1,16 +1,17 @@
 package house.lower.user.web;
 
 
+import house.lower.user.form.UserSaveForm;
+import house.lower.user.form.UserUpdateForm;
 import house.lower.user.service.UserService;
 import house.lower.user.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,8 +35,6 @@ public class UserController {
 
         List<UserVO> userList = userService.selectUserList(userVO);
 
-        log.info("userlist={}",userList);
-
         model.addAttribute("userList", userList);
 
         return "user/userList";
@@ -55,14 +54,27 @@ public class UserController {
 
     /**
      * 회원 저장
-     * @param userVO
+     * @param userSaveForm
      * @return
      * @throws Exception
      */
     @PostMapping("/save")
-    public String saveUserInfo(UserVO userVO) throws Exception {
+    public String saveUserInfo(@Validated @ModelAttribute("userVO") UserSaveForm userSaveForm, BindingResult bindingResult) throws Exception {
 
-        log.info("userVO={}", userVO);
+        //검증에 실패하면 다시 입력 폼으로
+        if(bindingResult.hasErrors()){
+            log.info("error={}", bindingResult);
+            return "user/userAddForm";
+        }
+
+        UserVO userVO = new UserVO();
+        userVO.setUserId(userSaveForm.getUserId());
+        userVO.setUserName(userSaveForm.getUserName());
+        userVO.setUserAge(userSaveForm.getUserAge());
+        userVO.setUserEmail(userSaveForm.getUserEmail());
+        userVO.setUserPhone(userSaveForm.getUserPhone());
+        userVO.setUserPassword(userSaveForm.getUserPassword());
+        userVO.setClassNo(userSaveForm.getClassNo());
 
         int result = userService.saveUserInfo(userVO);
 
@@ -92,7 +104,7 @@ public class UserController {
      */
     @GetMapping("/remove/{userNo}")
     public String removeUserInfo(@PathVariable int userNo) throws Exception {
-            int result = userService.removeUserInfo(userNo);
+        int result = userService.removeUserInfo(userNo);
         return "redirect:/user/list";
     }
 
@@ -112,12 +124,28 @@ public class UserController {
 
     /**
      * 회원 수정
-     * @param userVO
+     * @param userUpdateForm
      * @return
      * @throws Exception
      */
     @PostMapping("/edit")
-    public String updateUserInfo(UserVO userVO) throws Exception {
+    public String updateUserInfo(@Validated @ModelAttribute("userVO") UserUpdateForm userUpdateForm, BindingResult bindingResult) throws Exception {
+
+        if(bindingResult.hasErrors()){
+            log.info("error={}", bindingResult);
+            return "user/userEditForm";
+        }
+
+        UserVO userVO = new UserVO();
+        userVO.setUserNo(userUpdateForm.getUserNo());
+        userVO.setUserId(userUpdateForm.getUserId());
+        userVO.setUserName(userUpdateForm.getUserName());
+        userVO.setUserAge(userUpdateForm.getUserAge());
+        userVO.setUserEmail(userUpdateForm.getUserEmail());
+        userVO.setUserPhone(userUpdateForm.getUserPhone());
+        userVO.setUserPassword(userUpdateForm.getUserPassword());
+        userVO.setClassNo(userUpdateForm.getClassNo());
+
         int result = userService.updateUserInfo(userVO);
         return "redirect:/user/userInfo/"+userVO.getUserNo();
     }

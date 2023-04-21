@@ -18,18 +18,27 @@
                             <h1 class="h4 text-gray-900 mb-4">회원수정</h1>
                         </div>
                         <form id="userForm" class="user" th:action="@{/user/edit}" th:object="${userVO}" method="post">
-                                <input type="hidden" th:field="*{userNo}">
+                            <input type="hidden" th:field="*{userNo}">
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" th:field="*{userId}" readonly >
+                                <input type="text" class="form-control form-control-user" th:field="*{userId}"  readonly >
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" th:field="*{userPassword}">
+                                <input type="text" class="form-control form-control-user" th:field="*{userPassword}" th:errorClass="field-error">
+                            </div>
+                            <div class="field-error" th:errors="*{userPassword}">
+                                비밀번호를 입력해주세요
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" th:field="*{userName}" >
+                                <input type="text" class="form-control form-control-user" th:field="*{userName}" th:errorclass="field-error">
+                            </div>
+                            <div class="field-error" th:errors="*{userName}">
+                                이름을 입력해주세요
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control form-control-user" th:field="*{userAge}" >
+                            </div>
+                            <div class="field-error" th:errors="*{userAge}">
+                                나이를 입력해주세요
                             </div>
                             <div class="form-group">
                                 <select class="form-control" th:field="*{classNo}">
@@ -38,9 +47,14 @@
                                     <option th:value="2">사랑</option>
                                 </select>
                             </div>
-
+                            <div class="field-error" th:errors="*{classNo}">
+                                반을 선택해주세요
+                            </div>
                             <div class="form-group">
                                 <input type="text" class="form-control form-control-user" th:field="*{userPhone}" >
+                            </div>
+                            <div class="field-error" th:errors="*{userPhone}">
+                                핸드폰을 입력해주세요
                             </div>
                             <div class="form-group">
                                 <input type="email" class="form-control form-control-user" th:field="*{userEmail}"  >

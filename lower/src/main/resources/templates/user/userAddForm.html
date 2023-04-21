@@ -19,27 +19,44 @@
                         </div>
                         <form id="userForm" class="user" th:action="@{/user/save}" th:object="${userVO}" method="post">
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" th:field="*{userId}" placeholder="아이디">
+                                <input type="text" class="form-control form-control-user" th:field="*{userId}" th:errorClass="field-error" placeholder="아이디">
+                            </div>
+                            <div class="field-error" th:errors="*{userId}">
+                                아이디를 입력해주세요
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control form-control-user" th:field="*{userPassword}" placeholder="비밀번호">
+                                <input type="password" class="form-control form-control-user" th:field="*{userPassword}" th:errorClass="field-error" placeholder="비밀번호">
+                            </div>
+                            <div class="field-error" th:errors="*{userPassword}">
+                                비밀번호를 입력해주세요
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" th:field="*{userName}" placeholder="이름">
+                                <input type="text" class="form-control form-control-user" th:field="*{userName}" th:errorClass="field-error" placeholder="이름">
+                            </div>
+                            <div class="field-error" th:errors="*{userName}">
+                                이름을 입력해주세요
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" th:field="*{userAge}" placeholder="나이">
+                                <input type="text" class="form-control form-control-user" th:field="*{userAge}" th:errorClass="field-error" placeholder="나이">
+                            </div>
+                            <div class="field-error" th:errors="*{userAge}">
+                                나이를 입력해주세요
                             </div>
                             <div class="form-group">
-                                <select class="form-control" th:name="classNo">
-                                    <option>-반 이름--</option>
+                                <select class="form-control" th:field="*{classNo}" th:errorClass="field-error">
+                                    <option value="0">-반 이름--</option>
                                     <option value="1">바다</option>
                                     <option value="2">사랑</option>
                                 </select>
                             </div>
-
+                            <div class="field-error" th:errors="*{classNo}">
+                                반을 선택해주세요
+                            </div>
                             <div class="form-group">
-                                <input type="text" class="form-control form-control-user" th:field="*{userPhone}" placeholder="핸드폰">
+                                <input type="text" class="form-control form-control-user" th:field="*{userPhone}" th:errorClass="field-error" placeholder="핸드폰">
+                            </div>
+                            <div class="field-error" th:errors="*{userPhone}">
+                                핸드폰번호를 입력해주세요
                             </div>
                             <div class="form-group">
                                 <input type="email" class="form-control form-control-user" th:field="*{userEmail}" placeholder="이메일">

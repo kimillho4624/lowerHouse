@@ -26,7 +26,12 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
+
+	//쿼리실행 로그 출력
 	implementation "org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16"
+
+	//검증
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 
 	//테스트에서 lombok 사용
