@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface UserMapper {
@@ -18,4 +19,6 @@ public interface UserMapper {
     int removeUserInfo(int userNo) throws SQLException;
 
     int updateUserInfo(UserVO userVO) throws SQLException;
+
+    Optional<UserVO> findByLoginId(String id) throws SQLException;
 }

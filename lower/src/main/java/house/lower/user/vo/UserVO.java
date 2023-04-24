@@ -20,6 +20,9 @@ public class UserVO {
     private String userRegDt;           //생성일자
     private String userEmail;           //이메일
 
+    private String loginId;             //로그인 id
+    private String loginName;           //로그인 사용자 이름
+
     public UserVO() {
     }
 

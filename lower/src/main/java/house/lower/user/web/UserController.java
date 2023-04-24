@@ -1,6 +1,8 @@
 package house.lower.user.web;
 
 
+import house.lower.SessionConst;
+import house.lower.argumentresolver.Login;
 import house.lower.user.form.UserSaveForm;
 import house.lower.user.form.UserUpdateForm;
 import house.lower.user.service.UserService;
@@ -13,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Slf4j
@@ -31,12 +35,12 @@ public class UserController {
      * @throws Exception
      */
     @GetMapping("/list")
-    public String selectUserList(UserVO userVO, Model model) throws Exception{
+    public String selectUserList(UserVO userVO, Model model, HttpServletRequest request) throws Exception{
 
+        //회원 목록
         List<UserVO> userList = userService.selectUserList(userVO);
 
         model.addAttribute("userList", userList);
-
         return "user/userList";
     }
 
@@ -58,6 +62,7 @@ public class UserController {
      * @return
      * @throws Exception
      */
+    @ResponseBody
     @PostMapping("/save")
     public String saveUserInfo(@Validated @ModelAttribute("userVO") UserSaveForm userSaveForm, BindingResult bindingResult) throws Exception {
 
@@ -78,8 +83,15 @@ public class UserController {
 
         int result = userService.saveUserInfo(userVO);
 
+        String message ="";
 
-        return "redirect:/user/list";
+        if(result > 0 ) {
+            message="<script>alert('회원가입 성공하였습니다.');location.href='/';</script>";
+        }else {
+            message="<script>alert('회원가입 실패');location.href='/';</script>";
+        }
+        return message;
+
     }
 
     /**
@@ -148,18 +160,6 @@ public class UserController {
 
         int result = userService.updateUserInfo(userVO);
         return "redirect:/user/userInfo/"+userVO.getUserNo();
-    }
-
-    /**
-     * 메인 페이지
-     * @return
-     * @throws Exception
-     */
-    @GetMapping("/")
-    public String loadPage() throws Exception {
-
-
-        return "index";
     }
 
 }

@@ -92,4 +92,16 @@
         WHERE
             USER_NO = #{userNo}
     </update>
+
+    <!-- 로그인 체크 -->
+    <select id="findByLoginId" resultType="house.lower.user.vo.UserVO" parameterType="String">
+        SELECT
+            USER_ID AS loginId,
+            USER_NAME as loginName,
+            USER_PASSWORD
+        FROM
+            USER_INFO
+        WHERE
+            USER_ID = #{id}
+    </select>
 </mapper>
