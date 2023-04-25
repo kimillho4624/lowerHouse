@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{includes/header :: head}"></head>
+
+<body class="bg-gradient-primary">
+
+<div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">유아 상세정보</h1>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                                <label th:text="#{user.userName}"></label>
+                            </div>
+                            <div class="col-sm-10 ">
+                                <input type="text" class="form-control form-control-user" th:value="${childVO.childName}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                                <labelt th:text="#{user.userAge}"></labelt>
+                            </div>
+                            <div class="col-sm-10 ">
+                                <input type="text" class="form-control form-control-user" th:value="${childVO.childAge}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                                <label th:text="#{user.className}"></label>
+                            </div>
+                            <div class="col-sm-10 ">
+                                <input type="text" class="form-control form-control-user" th:value="${childVO.className}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                                <label th:text="#{child.childGender}"></label>
+                            </div>
+                            <div class="col-sm-10 ">
+                                <input type="text" class="form-control form-control-user" th:value="${childVO.childGender}" readonly>
+                            </div>
+                        </div>
+                        <a th:href="@{|/child/edit/${childVO.childNo}|}" class="btn btn-primary btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas
+                                                 fa-flag"></i>
+                                            </span>
+                            <span class="text" th:text="#{btn.update}"></span>
+                        </a>
+                        <a th:href="@{|/child/remove/${childVO.childNo}|}" class="btn btn-danger btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+                            <span class="text" th:text="#{btn.delete}"></span>
+                        </a>
+                        <a th:href="@{/child/list}" class="btn btn-success btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                            <span class="text" th:text="#{btn.list}"></span>
+                        </a>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/js/child/child.js"></script>
+</div>
+<footer th:replace="~{includes/footer :: footer}"></footer>
+</body>
+
+</html>

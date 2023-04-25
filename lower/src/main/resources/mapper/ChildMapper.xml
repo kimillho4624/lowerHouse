@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="house.lower.child.mapper.ChildMapper">
+
+    <!-- 유아 목록 -->
+    <select id="selectChildList" parameterType="house.lower.child.vo.ChildVO" resultType="house.lower.child.vo.ChildVO">
+            SELECT
+                CHILD_NO,
+                CHILD_NAME,
+                (SELECT CLASS_NAME FROM CLASS_INFO WHERE CLASS_NO = A.CLASS_NO) AS CLASS_NAME,
+                CHILD_AGE,
+                CASE WHEN CHILD_GENDER = 'M' THEN '남자'
+                    WHEN CHILD_GENDER = 'W' THEN '여자'
+                ELSE '' END AS CHILD_GENDER,
+                TO_CHAR(CHILD_REG_DT,'YYYY-MM-DD') AS CHILD_REG_DT
+            FROM
+                CHILD_INFO A
+            WHERE
+                CHILD_DEL_YN = 'N'
+            ORDER BY CHILD_NO DESC
+    </select>
+
+    <!-- 유아 저장 -->
+    <insert id="saveChildInfo" parameterType="house.lower.child.vo.ChildVO">
+        INSERT INTO CHILD_INFO
+        (
+            CHILD_NO,
+            CHILD_NAME,
+            CHILD_GENDER,
+            CHILD_AGE,
+            CLASS_NO,
+            CHILD_REG_DT
+        )
+        VALUES
+        (
+            CHILD_NO_SEQ.NEXTVAL,
+            #{childName},
+            #{childGender},
+            #{childAge},
+            #{classNo},
+            SYSDATE
+        )
+    </insert>
+
+    <!-- 유아 상세 정보 -->
+    <select id="selectChildInfo" parameterType="int" resultType="house.lower.child.vo.ChildVO">
+        SELECT
+        CHILD_NO,
+        CHILD_NAME,
+        (SELECT CLASS_NAME FROM CLASS_INFO WHERE CLASS_NO = A.CLASS_NO) AS CLASS_NAME,
+        CLASS_NO,
+        CHILD_AGE,
+        CASE WHEN CHILD_GENDER = 'M' THEN '남자'
+        WHEN CHILD_GENDER = 'W' THEN '여자'
+        ELSE '' END AS CHILD_GENDER,
+        TO_CHAR(CHILD_REG_DT,'YYYY-MM-DD') AS CHILD_REG_DT
+        FROM
+        CHILD_INFO A
+        WHERE
+            CHILD_NO = #{childNo}
+    </select>
+
+    <!-- 유아 삭제 -->
+    <update id="removeChildInfo" parameterType="int">
+        UPDATE CHILD_INFO SET
+            CHILD_DEL_YN = 'Y'
+        WHERE
+            CHILD_NO = #{childNo}
+    </update>
+
+    <!-- 유아 정보 수정 -->
+    <update id="updateChildInfo" parameterType="house.lower.child.vo.ChildVO">
+        UPDATE CHILD_INFO SET
+            CHILD_NAME = #{childName},
+            CHILD_AGE = #{childAge},
+            CHILD_GENDER = #{childGender},
+            CLASS_NO = #{classNo}
+        WHERE
+            CHILD_NO = #{childNo}
+    </update>
+</mapper>

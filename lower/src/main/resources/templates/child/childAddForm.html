@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{includes/header :: head}"></head>
+
+<body class="bg-gradient-primary">
+
+<div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">유아 등록</h1>
+                        </div>
+                        <form id="childForm" class="user" th:action="@{/child/save}" th:object="${childSaveForm}" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" th:field="*{childName}" placeholder="이름">
+                            </div>
+                            <div class="field-error" th:errors="*{childName}">
+                                이름 오류
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" th:field="*{childAge}" placeholder="나이">
+                            </div>
+                            <div class="field-error" th:errors="*{childAge}">
+                                나이 오류
+                            </div>
+                            <div class="form-group">
+                                <select class="custom-select" th:field="*{classNo}">
+                                    <option value="0">-반 이름--</option>
+                                    <option value="1">바다</option>
+                                    <option value="2">사랑</option>
+                                </select>
+                            </div>
+                            <div class="field-error" th:errors="*{classNo}">
+                                반 선택 오류
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 form-check">
+                                    <input class="form-check-input" type="radio" name="childGender" id="genderMan" value="M" checked>
+                                    <label class="form-check-label" for="genderMan">
+                                        남자
+                                    </label>
+                                </div>
+                                <div class="cok-sm-6 form-check">
+                                    <input class="form-check-input" type="radio" name="childGender" id="genderGirl" value="W">
+                                    <label class="form-check-label" for="genderGirl">
+                                        여자
+                                    </label>
+                                </div>
+                            </div>
+                            <a href="#" th:onclick="save();" class="btn btn-primary btn-user btn-block">저장</a>
+                        </form>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/js/child/child.js"></script>
+</div>
+<footer th:replace="~{includes/footer :: footer}"></footer>
+</body>
+</html>
