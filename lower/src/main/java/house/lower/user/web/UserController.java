@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -62,9 +63,10 @@ public class UserController {
      * @return
      * @throws Exception
      */
-    @ResponseBody
     @PostMapping("/save")
-    public String saveUserInfo(@Validated @ModelAttribute("userVO") UserSaveForm userSaveForm, BindingResult bindingResult) throws Exception {
+    public String saveUserInfo(@Validated @ModelAttribute("userVO") UserSaveForm userSaveForm, BindingResult bindingResult, RedirectAttributes ra) throws Exception {
+
+        String message ="";
 
         //검증에 실패하면 다시 입력 폼으로
         if(bindingResult.hasErrors()){
@@ -83,15 +85,14 @@ public class UserController {
 
         int result = userService.saveUserInfo(userVO);
 
-        String message ="";
-
-        if(result > 0 ) {
-            message="<script>alert('회원가입 성공하였습니다.');location.href='/';</script>";
-        }else {
-            message="<script>alert('회원가입 실패');location.href='/';</script>";
+        if(result > 0 ){
+            message = "가입 성공";
+        } else {
+            message = "가입 실패";
         }
-        return message;
 
+        ra.addFlashAttribute("message", message);
+        return "redirect:/user/list";
     }
 
     /**

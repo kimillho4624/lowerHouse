@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -61,7 +62,7 @@ public class ChildController {
      * @throws Exception
      */
     @PostMapping("/save")
-    public String saveChildInfo(@Valid @ModelAttribute ChildSaveForm childSaveForm, BindingResult bindingResult, Model model) throws Exception {
+    public String saveChildInfo(@Valid @ModelAttribute ChildSaveForm childSaveForm, BindingResult bindingResult,RedirectAttributes ra) throws Exception {
 
         if (bindingResult.hasErrors()) {
             log.info("error={}", bindingResult);
@@ -74,8 +75,16 @@ public class ChildController {
         childVO.setChildGender(childSaveForm.getChildGender());
         childVO.setClassNo(childSaveForm.getClassNo());
 
-        childService.saveChildInfo(childVO);
+        int result = childService.saveChildInfo(childVO);
 
+        String message = "";
+        if(result > 0 ){
+            message = "등록 성공";
+        }else {
+            message = "등록 실패";
+        }
+
+        ra.addFlashAttribute("message", message);
         return "redirect:/child/list";
     }
 
@@ -131,9 +140,13 @@ public class ChildController {
         return "child/childUpdateForm";
     }
 
-    @ResponseBody
     @PostMapping("/edit")
-    public String updateChildInfo(ChildUpdateForm childUpdateForm) throws Exception {
+    public String updateChildInfo(@Valid  ChildUpdateForm childUpdateForm, BindingResult bindingResult, RedirectAttributes ra) throws Exception {
+
+        if (bindingResult.hasErrors()) {
+            log.info("error={}", bindingResult);
+            return "child/childAddForm";
+        }
 
         ChildVO childVO = new ChildVO();
         childVO.setChildNo(childUpdateForm.getChildNo());
@@ -145,10 +158,12 @@ public class ChildController {
         int result = childService.updateChildInfo(childVO);
         String message = "";
         if(result > 0 ){
-            message = "<script>alert('수정 되었습니다.');location.href='/child/info/"+childUpdateForm.getChildNo()+"';</script>";
+            message = "수정 성공";
         }else {
-            message = "<script>alert('수정 실패 하였습니다.');location.href='/child/info/"+childUpdateForm.getChildNo()+"';</script>";
+            message = "수정 실패";
         }
-        return message;
+
+        ra.addFlashAttribute("message", message);
+        return "redirect:/child/list";
     }
 }

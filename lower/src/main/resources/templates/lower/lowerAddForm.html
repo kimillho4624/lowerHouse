@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{includes/header :: head}"></head>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">하원 관리</h1>
+
+  <!-- DataTales Example -->
+  <form id="lowerForm" th:action="@{/lower/save}" method="post" th:object="${lowerSaveForm}">
+  <div class="card shadow mb-4" style="width: 700px;">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">하원 정보 등록</h6>
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <label class="mb-1">하원 제목</label>
+        <input class="form-control" th:field="*{lowerTitle}" type="text" placeholder="">
+      </div>
+      <div th:errors="*{lowerTitle}">
+          제목 오류
+      </div>
+      <div class="form-group">
+        <label class="mb-1">하원 종류</label>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-3 form-check" style="margin-left:10px;">
+          <input class="form-check-input" type="radio" name="lowerType" id="lowerTypeCar" value="A" checked>
+          <label class="form-check-label" for="lowerTypeCar">
+            차량
+          </label>
+        </div>
+        <div class="col-sm-3 form-check" style="margin-left:10px;">
+          <input class="form-check-input" type="radio" name="lowerType" id="lowerTypeWalk" value="B">
+          <label class="form-check-label" for="lowerTypeWalk">
+            도보
+          </label>
+        </div>
+      </div>
+      <div class="form-group carChoice">
+        <label class="mb-1">차량 선택</label>
+      </div>
+      <div class="form-group carChoice">
+        <select class="custom-select" style="width:300px;" th:field="*{carNo}" id="selectCarNo">
+          <option value="0">-차량--</option>
+          <option value="1">둘리</option>
+          <option value="2">지구</option>
+        </select>
+      </div>
+      <div th:if="${#fields.hasErrors()}" >
+        <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+           th:text="${err}">전체 오류 메시지</p>
+      </div>
+      <div class="form-group">
+        <label class="mb-1">하원 날짜</label>
+        <input class="form-control" th:field="*{lowerDt}" type="date" placeholder="" style="width:300px;">
+      </div>
+      <div th:errors="*{lowerDt}">
+          날짜 오류
+      </div>
+      <div class="form-group">
+        <label class="mb-1">하원 시간</label>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-2 form-check">
+          <select class="custom-select" style="width:80px;" th:field="*{lowerStartHh}" id="selectHh">
+            <option value="">-시간--</option>
+          </select>
+        </div>
+        <div class="col-sm-2 form-check">
+          <select class="custom-select" style="width:80px;" th:field="*{lowerStartMi}" id="selectMi">
+            <option value="">-분--</option>
+          </select>
+        </div>
+      </div>
+        <div th:if="${#fields.hasErrors('lowerStartHh')} or ${#fields.hasErrors('lowerStartMi')}">
+          시간이나 분을 선택해주세요
+        </div>
+      </div>
+      </th:block>
+    </div>
+  </div>
+  </form>
+  <a th:onclick="save();" class="btn btn-primary btn-icon-split">
+    <span class="icon text-white-50"><i class="fas fa-flag"></i></span>
+    <span class="text">저장</span>
+  </a>
+
+  </br>
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>Copyright &copy; Your Website 2020</span>
+    </div>
+  </div>
+</footer>
+<!-- End of Footer -->
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-primary" href="login.html">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer th:replace="~{includes/footer :: footer}"></footer>
+
+<script src="/js/lower/lower.js"></script>
+
+</html>

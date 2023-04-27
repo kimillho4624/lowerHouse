@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="house.lower.lower.mapper.LowerMapper">
+
+    <!-- 하원 정보 목록 -->
+    <select id="selectLowerList" resultType="house.lower.lower.vo.LowerVO" parameterType="house.lower.lower.vo.LowerVO">
+        SELECT
+            LOWER_NO,
+            LOWER_TITLE,
+            CASE WHEN LOWER_TYPE = 'A' THEN '차량'
+                WHEN LOWER_TYPE = 'B' THEN '도보'
+                ELSE '' END AS LOWER_TYPE,
+            (SELECT CAR_NAME FROM LOWER_CAR_INFO WHERE CAR_NO = A.CAR_NO) CAR_NAME,
+            CAR_NO,
+            LOWER_START_HH,
+            LOWER_START_MI,
+            TO_CHAR(LOWER_DT,'YYYY-MM-DD') AS LOWER_DT,
+            TO_CHAR(LOWER_REG_DT,'YYYY-MM-DD') AS LOWER_REG_DT,
+            LOWER_DEL_YN
+        FROM
+            LOWER_INFO A
+        WHERE
+            LOWER_DEL_YN = 'N'
+        ORDER BY LOWER_NO DESC
+    </select>
+
+    <!-- 하원 정보 저장 -->
+    <insert id="saveLowerInfo">
+        INSERT INTO LOWER_INFO
+            (
+                LOWER_NO,
+                LOWER_TITLE,
+                LOWER_TYPE,
+                CAR_NO,
+                LOWER_START_HH,
+                LOWER_START_MI,
+                LOWER_DT,
+                LOWER_REG_DT
+            )
+        VALUES
+            (
+                LOWER_NO_SEQ.NEXTVAL,
+                #{lowerTitle},
+                #{lowerType},
+                #{carNo},
+                #{lowerStartHh},
+                #{lowerStartMi},
+                #{lowerDt},
+                SYSDATE
+            )
+
+    </insert>
+</mapper>

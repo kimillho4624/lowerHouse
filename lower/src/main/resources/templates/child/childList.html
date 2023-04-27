@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+
+    const result = /*[[${message}]]*/;
+    if(result != null) {
+        alert(result);
+    }
+
+    /*]]>*/
+
+</script>
+
         <head th:replace="~{includes/header :: head}"></head>
 
             <!-- Begin Page Content -->
@@ -26,7 +39,7 @@
                                     <th>성별</th>
                                     <th>생성일자</th>
                                 </tr>
-                                </thead>
+                                </thead>a
                                 <tbody>
                                 <tr th:each="child, status : ${childList}">
                                     <td th:text="${status.count}"></td>

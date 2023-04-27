@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+
+    const result = /*[[${message}]]*/;
+    if(result != null) {
+        alert(result);
+    }
+
+    /*]]>*/
+
+</script>
+
         <head th:replace="~{includes/header :: head}"></head>
 
             <!-- Begin Page Content -->
