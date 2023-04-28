@@ -1,14 +1,11 @@
 package house.lower.lower.form;
 
-import house.lower.cmm.vo.CodeVO;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Date;
-import java.util.List;
 
 @Data
-public class LowerSaveForm {
+public class LowerUpdateForm {
 
     public int lowerNo;                     // 하원 번호
 
@@ -30,6 +27,4 @@ public class LowerSaveForm {
     @NotBlank(message = "날짜 선택 필수")
     public String lowerDt;                  // 하원 날짜
 
-    public List<CodeVO> hourList;           // 시간 선택
-    public List<CodeVO> minList;            // 분 선택
 }

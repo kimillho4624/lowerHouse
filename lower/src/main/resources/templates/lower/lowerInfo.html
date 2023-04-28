@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{includes/header :: head}"></head>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">하원 관리</h1>
+
+    <!-- DataTales Example -->
+        <div class="card shadow mb-4" style="width: 700px;">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">하원 상세 정보</h6>
+            </div>
+            <div class="card-body">
+                <th:block th:object="${lowerVO}">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <colgroup>
+                        <col style="width:20%">
+                        <col style="width:80%">
+                    </colgroup>
+                    <tr>
+                        <td th:text="#{lower.lowerTitle}"></td>
+                        <td th:text="${lowerVO.lowerTitle}"></td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{lower.lowerType}"></td>
+                        <td th:text="${lowerVO.lowerType}"></td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{lower.carName}"></td>
+                        <td th:text="${lowerVO.carName}"></td>
+                    </tr>
+                    <tr>
+                        <td th:text="#{lower.lowerDt}"></td>
+                        <td th:text="${lowerVO.lowerDt}"></td>
+                    </tr>
+                    <tr>
+                        <td>하원 시간</td>
+                        <td th:text="|${lowerVO.lowerStartHh}시 ${lowerVO.lowerStartMi}분|"></td>
+                    </tr>
+                </table>
+                </th:block>
+            </div>
+        </div>
+    <a th:href="@{|/lower/edit/${lowerVO.lowerNo}|}" class="btn btn-primary btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas
+                                                 fa-flag"></i>
+                                            </span>
+        <span class="text" th:text="#{btn.update}"></span>
+    </a>
+    <a th:href="@{|/lower/remove/${lowerVO.lowerNo}|}" class="btn btn-danger btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+        <span class="text" th:text="#{btn.delete}"></span>
+    </a>
+    <a th:href="@{/lower/list}" class="btn btn-success btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+        <span class="text" th:text="#{btn.list}"></span>
+    </a>
+    <a th:onclick="addChild();" class="btn btn-secondary btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+        <span class="text">유아 추가</span>
+    </a>
+</div>
+
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer th:replace="~{includes/footer :: footer}"></footer>
+
+<script src="/js/lower/lower.js"></script>
+
+</html>

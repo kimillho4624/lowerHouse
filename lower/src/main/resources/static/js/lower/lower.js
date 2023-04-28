@@ -17,37 +17,6 @@ $(document).ready(function() {
 
     });
 
-    //하원 시간 시 선택 select option 부여
-
-    var timeArr = [];
-    var timeVal = "";
-
-    for( var i=9; i< 24; i++) {
-
-        if(i<10) {
-            timeVal = "0"+i;
-        } else {
-            timeVal = i;
-        }
-
-        timeArr[i] = "<option value="+timeVal+">"+timeVal+"</option>"
-    }
-
-    $("#selectHh").append(timeArr.join(""));
-
-   //하원 시간 분 선택 select option 부여
-
-   var timeMiArr = [];
-   var timeMiVal = "";
-
-   for( var i=0; i< 6; i++) {
-
-       timeMiVal = i+"0";
-
-       timeMiArr[i] = "<option value="+timeMiVal+">"+timeMiVal+"</option>"
-   }
-   $("#selectMi").append(timeMiArr.join(""));
-
 });
 
 function save() {
@@ -57,3 +26,6 @@ function save() {
 
 }
 
+function addChild() {
+
+}

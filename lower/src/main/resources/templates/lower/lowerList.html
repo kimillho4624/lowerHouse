@@ -30,7 +30,7 @@
                     <tbody>
                     <tr th:each="lower , status : ${lowerList}">
                         <td th:text="${lower.lowerNo}"></td>
-                        <td><a th:href="@{|/child/info/|}" th:text="${lower.lowerTitle}"></a></td>
+                        <td><a th:href="@{|/lower/info/${lower.lowerNo}|}" th:text="${lower.lowerTitle}"></a></td>
                         <td th:text="${lower.lowerDt}"></td>
                         <td th:text="|${lower.lowerStartHh}시|+|${lower.lowerStartMi}분|"></td>
                         <td th:text="${lower.lowerType}"></td>

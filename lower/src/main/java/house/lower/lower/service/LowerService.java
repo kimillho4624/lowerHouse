@@ -22,4 +22,12 @@ public class LowerService {
     public int saveLowerInfo(LowerVO lowerVO) throws Exception {
         return lowerMapper.saveLowerInfo(lowerVO);
     }
+
+    public LowerVO selectLowerInfo(int lowerNo) throws Exception {
+        return lowerMapper.selectLowerInfo(lowerNo);
+    }
+
+    public int updateLowerInfo(LowerVO lowerVO) throws Exception {
+        return lowerMapper.updateLowerInfo(lowerVO);
+    }
 }
