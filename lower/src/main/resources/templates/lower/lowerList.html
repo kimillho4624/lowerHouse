@@ -3,6 +3,20 @@
 
 <head th:replace="~{includes/header :: head}"></head>
 
+
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+
+    const result = /*[[${message}]]*/;
+    if(result != null) {
+        alert(result);
+    }
+
+    /*]]>*/
+
+</script>
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 

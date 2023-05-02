@@ -32,4 +32,6 @@ public class LowerSaveForm {
 
     public List<CodeVO> hourList;           // 시간 선택
     public List<CodeVO> minList;            // 분 선택
+
+    public String[] childNoArr;             // 유아 번호 체크박스 배열
 }

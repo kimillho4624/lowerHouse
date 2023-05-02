@@ -87,4 +87,32 @@
         WHERE
             LOWER_NO = #{lowerNo}
     </update>
+
+    <!-- 하원 삭제 -->
+    <update id="removeLowerInfo" parameterType="int">
+        UPDATE LOWER_INFO SET
+            LOWER_DEL_YN = 'Y'
+        WHERE
+            LOWER_NO = #{lowerNo}
+    </update>
+
+    <!-- 하원 유아 정보 저장 -->
+    <insert id="saveLowerChildInfo" parameterType="house.lower.lower.vo.LowerVO">
+        INSERT INTO LOWER_CHILD_INFO
+        (
+            LOWER_CHILD_NO,
+            CHILD_NO,
+            LOWER_NO,
+            CHILD_NAME,
+            LOWER_CHILD_REG_DT
+        )
+        VALUES
+        (
+            LOWER_CHILD_NO_SEQ.NEXTVAL,
+            #{childNo},
+            #{lowerNo},
+            #{childName},
+            sysdate
+        )
+    </insert>
 </mapper>

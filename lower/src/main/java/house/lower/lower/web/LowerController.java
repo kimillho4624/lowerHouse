@@ -1,5 +1,7 @@
 package house.lower.lower.web;
 
+import house.lower.child.service.ChildService;
+import house.lower.child.vo.ChildVO;
 import house.lower.cmm.vo.CodeVO;
 import house.lower.lower.form.LowerSaveForm;
 import house.lower.lower.form.LowerUpdateForm;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ import java.util.List;
 public class LowerController {
 
     private final LowerService lowerService;
+    private final ChildService childService;
 
     /**
      * 하원 정보 목록
@@ -123,6 +127,10 @@ public class LowerController {
 
         LowerVO lowerVO = lowerService.selectLowerInfo(lowerNo);
 
+        //유아목록
+        List<ChildVO> childList = childService.selectLowerChildList(lowerNo);
+
+        model.addAttribute("childList", childList);
         model.addAttribute("lowerVO", lowerVO);
         return "lower/lowerInfo";
     }
@@ -148,6 +156,13 @@ public class LowerController {
         return "lower/lowerEditForm";
     }
 
+    /**
+     * 하원 정보 수정
+     * @param lowerUpdateForm
+     * @param model
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/edit")
     public String updateLowerInfo(LowerUpdateForm lowerUpdateForm, Model model) throws Exception {
 
@@ -162,8 +177,45 @@ public class LowerController {
 
         int result = lowerService.updateLowerInfo(lowerVO);
 
-        return "";
+        return "redirect:/lower/info/"+lowerUpdateForm.getLowerNo();
     }
+
+    /**
+     * 하원 정보 삭제
+     * @param lowerNo
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/remove/{lowerNo}")
+    public String removeLowerInfo(@PathVariable int lowerNo, RedirectAttributes ra) throws Exception {
+
+        int result = lowerService.removeLowerInfo(lowerNo);
+
+        String message = "";
+
+        if(result > 0 ) {
+            message = "삭제 성공";
+        } else {
+            message = "삭제 실패";
+        }
+
+        ra.addFlashAttribute("message",message);
+        return "redirect:/lower/list";
+    }
+
+    @PostMapping("/lowerChild/add")
+    public String saveLowerChildInfo(LowerSaveForm lowerSaveForm) throws Exception {
+
+        log.info("lowerSaveForm@@@@@@@@@@@@={}",lowerSaveForm);
+
+        int result = lowerService.saveLowerChildInfo(lowerSaveForm);
+
+        return "redirect:/lower/info/"+lowerSaveForm.getLowerNo();
+    }
+
+
+
+
 
     /**
      * 시간 <option>태그 만들기

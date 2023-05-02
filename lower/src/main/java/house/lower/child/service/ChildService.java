@@ -32,4 +32,8 @@ public class ChildService {
     public int updateChildInfo(ChildVO childVO) throws Exception {
         return childMapper.updateChildInfo(childVO);
     }
+
+    public List<ChildVO> selectLowerChildList(int lowerNo) throws Exception{
+        return childMapper.selectLowerChildList(lowerNo);
+    }
 }

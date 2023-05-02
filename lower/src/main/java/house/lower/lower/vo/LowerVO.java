@@ -15,4 +15,20 @@ public class LowerVO {
     public String lowerDt;                  // 하원 날짜
     public String lowerRegDt;               // 하원 생성 일자
     public String lowerDelYn;               // 삭제 여부
+    public int childNo;                     // 유아 번호
+    public String childName;                // 유아 이름
+
+    public LowerVO() {
+    }
+
+    public LowerVO(int lowerNo, String lowerTitle, String lowerType, int carNo, String lowerStartHh, String lowerStartMi, String lowerDt) {
+        this.lowerNo = lowerNo;
+        this.lowerTitle = lowerTitle;
+        this.lowerType = lowerType;
+        this.carNo = carNo;
+        this.lowerStartHh = lowerStartHh;
+        this.lowerStartMi = lowerStartMi;
+        this.lowerDt = lowerDt;
+    }
 }
+

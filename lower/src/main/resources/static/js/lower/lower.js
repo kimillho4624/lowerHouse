@@ -17,6 +17,10 @@ $(document).ready(function() {
 
     });
 
+    $('#btnSave').click(function(){
+        var form = $('#modalForm');
+        form.submit();
+    });
 });
 
 function save() {
@@ -27,5 +31,5 @@ function save() {
 }
 
 function addChild() {
-
+    $('#myModal').modal("show"); //열기
 }

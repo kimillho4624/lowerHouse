@@ -18,4 +18,6 @@ public interface ChildMapper {
     int removeChildInfo(int childNo) throws SQLException;
 
     int updateChildInfo(ChildVO childVO) throws SQLException;
+
+    List<ChildVO> selectLowerChildList(int lowerNo) throws SQLException;
 }

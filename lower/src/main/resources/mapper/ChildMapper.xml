@@ -80,4 +80,23 @@
         WHERE
             CHILD_NO = #{childNo}
     </update>
+
+    <!-- 하원 유아 추가 목록 -->
+    <select id="selectLowerChildList" resultType="house.lower.child.vo.ChildVO" parameterType="int">
+        SELECT
+        CHILD_NO,
+        CHILD_NAME,
+        (SELECT CLASS_NAME FROM CLASS_INFO WHERE CLASS_NO = A.CLASS_NO) AS CLASS_NAME,
+        CHILD_AGE,
+        CASE WHEN CHILD_GENDER = 'M' THEN '남자'
+        WHEN CHILD_GENDER = 'W' THEN '여자'
+        ELSE '' END AS CHILD_GENDER,
+        TO_CHAR(CHILD_REG_DT,'YYYY-MM-DD') AS CHILD_REG_DT
+        FROM
+        CHILD_INFO A
+        WHERE
+        CHILD_DEL_YN = 'N'
+        AND CHILD_NO NOT IN (SELECT CHILD_NO FROM LOWER_CHILD_INFO WHERE LOWER_NO = #{lowerNo} AND LOWER_CHILD_DEL_YN = 'N')
+        ORDER BY CHILD_NAME DESC
+    </select>
 </mapper>

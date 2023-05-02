@@ -116,8 +116,18 @@ public class UserController {
      * @throws Exception
      */
     @GetMapping("/remove/{userNo}")
-    public String removeUserInfo(@PathVariable int userNo) throws Exception {
+    public String removeUserInfo(@PathVariable int userNo,RedirectAttributes ra) throws Exception {
         int result = userService.removeUserInfo(userNo);
+
+        String message = "";
+
+        if(result > 0 ){
+            message = "삭제 성공";
+        } else {
+            message = "삭제 실패";
+        }
+
+        ra.addFlashAttribute("message", message);
         return "redirect:/user/list";
     }
 
