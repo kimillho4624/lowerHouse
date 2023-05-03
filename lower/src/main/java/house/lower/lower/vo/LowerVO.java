@@ -17,6 +17,11 @@ public class LowerVO {
     public String lowerDelYn;               // 삭제 여부
     public int childNo;                     // 유아 번호
     public String childName;                // 유아 이름
+    public int lowerChildNo;                // 하원 유아 번호
+    public String childGender;              // 유아 성별
+    public String className;                // 반 이름
+    public int classNo;                     // 반 번호
+
 
     public LowerVO() {
     }

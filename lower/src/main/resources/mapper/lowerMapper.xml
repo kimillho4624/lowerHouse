@@ -103,6 +103,7 @@
             LOWER_CHILD_NO,
             CHILD_NO,
             LOWER_NO,
+            CLASS_NO,
             CHILD_NAME,
             LOWER_CHILD_REG_DT
         )
@@ -111,8 +112,33 @@
             LOWER_CHILD_NO_SEQ.NEXTVAL,
             #{childNo},
             #{lowerNo},
+            #{classNo},
             #{childName},
             sysdate
         )
     </insert>
+
+    <!-- 하원에 추가된 유아 목록 -->
+    <select id="selectLowerChildInfoList" parameterType="int" resultType="house.lower.lower.vo.LowerVO">
+        SELECT
+            LOWER_CHILD_NO,
+            CHILD_NO,
+            LOWER_NO,
+            CHILD_NAME,
+            (SELECT CHILD_GENDER FROM CHILD_INFO WHERE CHILD_NO = A.CHILD_NO) AS CHILD_GENDER,
+            (SELECT CLASS_NAME FROM CLASS_INFO WHERE CLASS_NO = A.CLASS_NO) AS CLASS_NAME
+        FROM
+            LOWER_CHILD_INFO A
+        WHERE
+            LOWER_CHILD_DEL_YN = 'N'
+            AND LOWER_NO = #{lowerNo}
+    </select>
+
+    <!-- 하원에 추가된 유아 삭제 -->
+    <update id="removeLowerChildInfo" parameterType="int">
+            UPDATE LOWER_CHILD_INFO SET
+                LOWER_CHILD_DEL_YN = 'Y'
+            WHERE
+                LOWER_CHILD_NO = #{lowerChildNo}
+    </update>
 </mapper>

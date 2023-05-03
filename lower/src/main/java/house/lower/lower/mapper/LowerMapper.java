@@ -1,5 +1,6 @@
 package house.lower.lower.mapper;
 
+import house.lower.child.vo.ChildVO;
 import house.lower.lower.vo.LowerVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -20,4 +21,8 @@ public interface LowerMapper {
     int removeLowerInfo(int lowerNo) throws SQLException;
 
     int saveLowerChildInfo(LowerVO lowerVO) throws SQLException;
+
+    List<LowerVO> selectLowerChildInfoList(int lowerNo) throws SQLException;
+
+    int removeLowerChildInfo(int lowerChildNo) throws SQLException;
 }

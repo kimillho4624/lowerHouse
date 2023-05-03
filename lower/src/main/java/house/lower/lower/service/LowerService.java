@@ -1,5 +1,6 @@
 package house.lower.lower.service;
 
+import house.lower.child.vo.ChildVO;
 import house.lower.lower.form.LowerSaveForm;
 import house.lower.lower.mapper.LowerMapper;
 import house.lower.lower.vo.LowerVO;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Slf4j
@@ -48,6 +50,7 @@ public class LowerService {
 
             lowerVO.setChildNo(Integer.parseInt(childArr[0]));
             lowerVO.setChildName(childArr[1]);
+            lowerVO.setClassNo(Integer.parseInt(childArr[2]));
             lowerVO.setLowerNo(lowerSaveForm.getLowerNo());
 
             result = lowerMapper.saveLowerChildInfo(lowerVO);
@@ -55,4 +58,24 @@ public class LowerService {
 
         return result;
     }
+
+    public List<LowerVO> selectLowerChildInfoList(int lowerNo) throws Exception {
+        return lowerMapper.selectLowerChildInfoList(lowerNo);
+    }
+
+    public int removeLowerChildInfo(LowerSaveForm lowerSaveForm) throws Exception{
+
+        int result = 0;
+
+        for(int i=0; i<lowerSaveForm.getChildNoArr().length; i++) {
+
+            LowerVO lowerVO = new LowerVO();
+            lowerVO.setLowerChildNo(Integer.parseInt(lowerSaveForm.getChildNoArr()[i]));
+
+            result = lowerMapper.removeLowerChildInfo(lowerVO.getLowerChildNo());
+        }
+
+        return result;
+    }
+
 }

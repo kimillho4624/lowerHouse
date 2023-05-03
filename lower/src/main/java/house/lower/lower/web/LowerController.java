@@ -78,11 +78,12 @@ public class LowerController {
     @PostMapping("/save")
     public String saveLowerInfo(@Valid LowerSaveForm lowerSaveForm, BindingResult bindingResult, Model model) throws Exception {
 
+        //시간 , 분 셀렉트 박스
+        List<CodeVO> hourList = hourList();
+        List<CodeVO> minList = minuteList();
+
         if(lowerSaveForm.getLowerType().equals("A") && lowerSaveForm.getCarNo()==0){
             bindingResult.reject("lowerTypeError","차량을 선택해주세요." );
-
-            List<CodeVO> hourList = hourList();
-            List<CodeVO> minList = minuteList();
 
             model.addAttribute("hourList",hourList);
             model.addAttribute("minList",minList);
@@ -92,10 +93,6 @@ public class LowerController {
         if(bindingResult.hasErrors()){
 
             log.info("error={}", bindingResult);
-
-            //시간 , 분 셀렉트 박스
-            List<CodeVO> hourList = hourList();
-            List<CodeVO> minList = minuteList();
 
             model.addAttribute("hourList",hourList);
             model.addAttribute("minList",minList);
@@ -130,6 +127,10 @@ public class LowerController {
         //유아목록
         List<ChildVO> childList = childService.selectLowerChildList(lowerNo);
 
+        //해당 하원에 추가된 유아 목록
+        List<LowerVO> childLowerList = lowerService.selectLowerChildInfoList(lowerNo);
+
+        model.addAttribute("childLowerList", childLowerList);
         model.addAttribute("childList", childList);
         model.addAttribute("lowerVO", lowerVO);
         return "lower/lowerInfo";
@@ -203,18 +204,32 @@ public class LowerController {
         return "redirect:/lower/list";
     }
 
+    /**
+     * 하원 유아 추가
+     * @param lowerSaveForm
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/lowerChild/add")
     public String saveLowerChildInfo(LowerSaveForm lowerSaveForm) throws Exception {
-
-        log.info("lowerSaveForm@@@@@@@@@@@@={}",lowerSaveForm);
-
         int result = lowerService.saveLowerChildInfo(lowerSaveForm);
-
         return "redirect:/lower/info/"+lowerSaveForm.getLowerNo();
     }
 
+    /**
+     * 하원 유아 삭제
+     * @param lowerSaveForm
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/lowerChild/remove")
+    public String removeLowerChildInfo(LowerSaveForm lowerSaveForm) throws Exception {
+
+        int result = lowerService.removeLowerChildInfo(lowerSaveForm);
 
 
+        return "redirect:/lower/info/"+lowerSaveForm.getLowerNo();
+    }
 
 
     /**

@@ -30,6 +30,12 @@ function save() {
 
 }
 
+function delChild() {
+    var form = $('#lowerChildForm');
+    form.submit();
+}
+
 function addChild() {
     $('#myModal').modal("show"); //열기
 }
+

@@ -10,41 +10,84 @@
     <h1 class="h3 mb-2 text-gray-800">하원 관리</h1>
 
     <!-- DataTales Example -->
-        <div class="card shadow mb-4" style="width: 700px;">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">하원 상세 정보</h6>
-            </div>
-            <div class="card-body">
-                <th:block th:object="${lowerVO}">
-                <table class="table table-bordered" width="100%" cellspacing="0">
-                    <colgroup>
-                        <col style="width:20%">
-                        <col style="width:80%">
-                    </colgroup>
-                    <tr>
-                        <td th:text="#{lower.lowerTitle}"></td>
-                        <td th:text="${lowerVO.lowerTitle}"></td>
-                    </tr>
-                    <tr>
-                        <td th:text="#{lower.lowerType}"></td>
-                        <td th:text="${lowerVO.lowerType}"></td>
-                    </tr>
-                    <tr>
-                        <td th:text="#{lower.carName}"></td>
-                        <td th:text="${lowerVO.carName}"></td>
-                    </tr>
-                    <tr>
-                        <td th:text="#{lower.lowerDt}"></td>
-                        <td th:text="${lowerVO.lowerDt}"></td>
-                    </tr>
-                    <tr>
-                        <td>하원 시간</td>
-                        <td th:text="|${lowerVO.lowerStartHh}시 ${lowerVO.lowerStartMi}분|"></td>
-                    </tr>
-                </table>
-                </th:block>
+    <div class="row">
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">하원 상세 정보</h6>
+                </div>
+                <div class="card-body">
+                    <th:block th:object="${lowerVO}">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <colgroup>
+                            <col style="width:20%">
+                            <col style="width:80%">
+                        </colgroup>
+                        <tr>
+                            <td th:text="#{lower.lowerTitle}"></td>
+                            <td th:text="${lowerVO.lowerTitle}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{lower.lowerType}"></td>
+                            <td th:text="${lowerVO.lowerType}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{lower.carName}"></td>
+                            <td th:text="${lowerVO.carName}"></td>
+                        </tr>
+                        <tr>
+                            <td th:text="#{lower.lowerDt}"></td>
+                            <td th:text="${lowerVO.lowerDt}"></td>
+                        </tr>
+                        <tr>
+                            <td>하원 시간</td>
+                            <td th:text="|${lowerVO.lowerStartHh}시 ${lowerVO.lowerStartMi}분|"></td>
+                        </tr>
+                    </table>
+                    </th:block>
+                </div>
             </div>
         </div>
+        <div class="col-xl-6 col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">하원 유아 목록</h6>
+                </div>
+                <div class="card-body">
+                        <form id="lowerChildForm" method="post" th:action="@{/lower/lowerChild/remove}">
+                        <input type="hidden" name="lowerNo" th:value="${lowerVO.lowerNo}">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <colgroup>
+                                <col style="width:10%">
+                                <col style="width:35%">
+                                <col style="width:30%">
+                                <col style="width:25%">
+                            </colgroup>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>이름</td>
+                                <td>반</td>
+                                <td>성별</td>
+                            </tr>
+                            <tr th:each="child , status : ${childLowerList}">
+                                <td><input type="checkbox" name="childNoArr" th:value="${child.lowerChildNo}"></td>
+                                <td th:text="${child.childName}"></td>
+                                <td th:text="${child.className}"></td>
+                                <td th:text="|${child.childGender == 'W' ? '여자' : '남자'}|"></td>
+                            </tr>
+                        </table>
+                        </form>
+                </div>
+            </div>
+
+            <a href="#" th:onclick="delChild();" class="btn btn-danger btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+                <span class="text" th:text="#{btn.delete}"></span>
+            </a>
+        </div>
+    </div>
     <a th:href="@{|/lower/edit/${lowerVO.lowerNo}|}" class="btn btn-primary btn-icon-split">
                                             <span class="icon text-white-50">
                                                 <i class="fas
@@ -105,8 +148,7 @@
                                 <td>성별</td>
                             </tr>
                             <tr th:each="child , status : ${childList}">
-                                <td><input type="checkbox" name="childNoArr" th:value="|${child.childNo},${child.childName}|">
-                                </td>
+                                <td><input type="checkbox" name="childNoArr" th:value="|${child.childNo},${child.childName},${child.classNo}|"></td>
                                 <td th:text="${child.childName}"></td>
                                 <td th:text="${child.className}"></td>
                                 <td th:text="${child.childGender}"></td>
