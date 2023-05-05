@@ -7,7 +7,9 @@ import house.lower.lower.vo.LowerVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.rmi.server.ExportException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -35,7 +37,15 @@ public class LowerService {
     }
 
     public int removeLowerInfo(int lowerNo) throws Exception {
-        return lowerMapper.removeLowerInfo(lowerNo);
+
+        int result = 0 ;
+
+        result = lowerMapper.removeLowerInfo(lowerNo);
+
+        //하원 유아도 삭제 해야함
+        lowerMapper.removeLowerChildList(lowerNo);
+
+        return result;
     }
 
     public int saveLowerChildInfo(LowerSaveForm lowerSaveForm) throws Exception {

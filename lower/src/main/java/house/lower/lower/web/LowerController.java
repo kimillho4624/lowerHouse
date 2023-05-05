@@ -10,6 +10,7 @@ import house.lower.lower.vo.LowerVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -187,6 +188,7 @@ public class LowerController {
      * @return
      * @throws Exception
      */
+    @Transactional
     @GetMapping("/remove/{lowerNo}")
     public String removeLowerInfo(@PathVariable int lowerNo, RedirectAttributes ra) throws Exception {
 

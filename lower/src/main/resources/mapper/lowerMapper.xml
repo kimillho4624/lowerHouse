@@ -141,4 +141,12 @@
             WHERE
                 LOWER_CHILD_NO = #{lowerChildNo}
     </update>
+
+    <!-- 하원 삭제에 따른 하원 유아 삭제 -->
+    <update id="removeLowerChildList" parameterType="int">
+            UPDATE LOWER_CHILD_INFO SET
+                LOWER_CHILD_DEL_YN = 'Y'
+            WHERE
+                LOWER_NO = #{lowerNo}
+    </update>
 </mapper>

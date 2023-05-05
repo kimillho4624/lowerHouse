@@ -47,13 +47,40 @@
                     </th:block>
                 </div>
             </div>
+
+            <a th:href="@{|/lower/edit/${lowerVO.lowerNo}|}" class="btn btn-primary btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas
+                                                 fa-flag"></i>
+                                            </span>
+                <span class="text" th:text="#{btn.update}"></span>
+            </a>
+            <a th:href="@{|/lower/remove/${lowerVO.lowerNo}|}" class="btn btn-danger btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+                <span class="text" th:text="#{btn.delete}"></span>
+            </a>
+            <a th:href="@{/lower/list}" class="btn btn-success btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                <span class="text" th:text="#{btn.list}"></span>
+            </a>
+            <a th:onclick="addChild();" class="btn btn-secondary btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                <span class="text">유아 추가</span>
+            </a>
+
         </div>
         <div class="col-xl-6 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">하원 유아 목록</h6>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="overflow:scroll; height:500px;">
                         <form id="lowerChildForm" method="post" th:action="@{/lower/lowerChild/remove}">
                         <input type="hidden" name="lowerNo" th:value="${lowerVO.lowerNo}">
                         <table class="table table-bordered" width="100%" cellspacing="0">
@@ -64,7 +91,7 @@
                                 <col style="width:25%">
                             </colgroup>
                             <tr>
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" id="allChildChk"></td>
                                 <td>이름</td>
                                 <td>반</td>
                                 <td>성별</td>
@@ -74,6 +101,9 @@
                                 <td th:text="${child.childName}"></td>
                                 <td th:text="${child.className}"></td>
                                 <td th:text="|${child.childGender == 'W' ? '여자' : '남자'}|"></td>
+                            </tr>
+                            <tr th:if="${#lists.size(childLowerList) == 0}" style="text-align: center;">
+                                <td colspan="4">하원 유아 정보가 없습니다.</td>
                             </tr>
                         </table>
                         </form>
@@ -88,31 +118,6 @@
             </a>
         </div>
     </div>
-    <a th:href="@{|/lower/edit/${lowerVO.lowerNo}|}" class="btn btn-primary btn-icon-split">
-                                            <span class="icon text-white-50">
-                                                <i class="fas
-                                                 fa-flag"></i>
-                                            </span>
-        <span class="text" th:text="#{btn.update}"></span>
-    </a>
-    <a th:href="@{|/lower/remove/${lowerVO.lowerNo}|}" class="btn btn-danger btn-icon-split">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-trash"></i>
-                                            </span>
-        <span class="text" th:text="#{btn.delete}"></span>
-    </a>
-    <a th:href="@{/lower/list}" class="btn btn-success btn-icon-split">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-check"></i>
-                                            </span>
-        <span class="text" th:text="#{btn.list}"></span>
-    </a>
-    <a th:onclick="addChild();" class="btn btn-secondary btn-icon-split">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-check"></i>
-                                            </span>
-        <span class="text">유아 추가</span>
-    </a>
 </div>
 
 <!-- End of Page Wrapper -->
@@ -142,7 +147,7 @@
                                 <col style="width:25%">
                             </colgroup>
                             <tr>
-                                <td><input type="checkbox"></td>
+                                <td><input type="checkbox" id="allModalChk"></td>
                                 <td>이름</td>
                                 <td>반</td>
                                 <td>성별</td>
@@ -152,6 +157,9 @@
                                 <td th:text="${child.childName}"></td>
                                 <td th:text="${child.className}"></td>
                                 <td th:text="${child.childGender}"></td>
+                            </tr>
+                            <tr th:if="${#lists.size(childList) == 0}" style="text-align: center;">
+                                <td colspan="4">하원 유아 정보가 없습니다.</td>
                             </tr>
                         </table>
                 </div>
@@ -188,6 +196,6 @@
 
 <footer th:replace="~{includes/footer :: footer}"></footer>
 
-<script src="/js/lower/lower.js"></script>
+<script src="/js/lower/lower.js?ver=2"></script>
 
 </html>

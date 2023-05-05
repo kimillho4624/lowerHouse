@@ -25,4 +25,6 @@ public interface LowerMapper {
     List<LowerVO> selectLowerChildInfoList(int lowerNo) throws SQLException;
 
     int removeLowerChildInfo(int lowerChildNo) throws SQLException;
+
+    int removeLowerChildList(int lowerNo) throws SQLException;
 }

@@ -21,6 +21,25 @@ $(document).ready(function() {
         var form = $('#modalForm');
         form.submit();
     });
+
+    $('#allChildChk').click(function(){
+
+        if($("#allChildChk").is(":checked")){
+              $("input[name=childNoArr]").prop("checked", true);
+        }else {
+              $("input[name=childNoArr]").prop("checked", false);
+        }
+
+    });
+
+    $('#allModalChk').click(function() {
+
+        if($("#allModalChk").is(":checked")){
+              $("input[name=childNoArr]").prop("checked", true);
+        }else {
+              $("input[name=childNoArr]").prop("checked", false);
+        }
+    });
 });
 
 function save() {
